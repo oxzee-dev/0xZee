@@ -1,0 +1,1599 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>0xZee | IT Project Manager & IT Engineer</title>
+    <meta name="description" content="0xZee - IT Project Manager & IT Engineer specializing in AI, Web3, DevOps, and Cloud Infrastructure. Building scalable systems and leading technical teams.">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- GSAP for animations -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        display: ['Space Grotesk', 'sans-serif'],
+                    },
+                    colors: {
+                        primary: {
+                            50: '#fff5f3',
+                            100: '#ffe8e4',
+                            200: '#ffd5cd',
+                            300: '#ffb8a8',
+                            400: '#FF775C',  // Main smooth coral-orange
+                            500: '#f05a3e',
+                            600: '#dd4026',
+                            700: '#ba331d',
+                            800: '#9a2e1e',
+                            900: '#802b1f',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        :root {
+            --primary-color: #FF775C;
+            --cursor-size: 20px;
+            --cursor-hover-size: 60px;
+        }
+        
+        body {
+            background: #000000;
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+        
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0a0a0a;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #FF775C;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #f05a3e;
+        }
+        
+        /* Grid Pattern Overlay */
+        .grid-pattern {
+            background-image: 
+                linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            mask-image: radial-gradient(ellipse at center, black 40%, transparent 70%);
+        }
+        
+        /* Glassmorphism */
+        .glass {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        
+        .glass-strong {
+            background: rgba(20, 20, 20, 0.7);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        /* Gradient Text - Smooth Coral */
+        .gradient-text {
+            background: linear-gradient(135deg, #FF775C 0%, #ffb8a8 50%, #FF775C 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        /* Glow Effects - Smooth Coral */
+        .glow-coral {
+            box-shadow: 0 0 40px rgba(255, 119, 92, 0.3);
+        }
+        
+        .text-glow {
+            text-shadow: 0 0 30px rgba(255, 119, 92, 0.5);
+        }
+        
+        /* Floating Animation */
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(2deg); }
+        }
+        
+        @keyframes floatReverse {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(20px) rotate(-2deg); }
+        }
+        
+        .float { animation: float 6s ease-in-out infinite; }
+        .float-reverse { animation: floatReverse 7s ease-in-out infinite; }
+        
+        /* Pulse Glow */
+        @keyframes pulseGlow {
+            0%, 100% { opacity: 0.4; transform: scale(1); }
+            50% { opacity: 0.8; transform: scale(1.1); }
+        }
+        
+        .pulse-glow { animation: pulseGlow 4s ease-in-out infinite; }
+        
+        /* Typing Cursor */
+        .typing-cursor::after {
+            content: '|';
+            animation: blink 1s infinite;
+            color: #FF775C;
+            margin-left: 4px;
+        }
+        
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+        
+        /* Particle Canvas */
+        #particles-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+        
+        /* Gradient Orbs - Coral */
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.4;
+            pointer-events: none;
+        }
+        
+        /* Skill Card Hover */
+        .skill-card {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .skill-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(255, 119, 92, 0.5);
+            box-shadow: 0 20px 40px rgba(255, 119, 92, 0.15);
+        }
+        
+        /* Horizontal Scroll Gallery */
+        .horizontal-section {
+            position: relative;
+            height: 300vh; /* Extended height for scroll distance */
+        }
+        
+        .horizontal-container {
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+        }
+        
+        .horizontal-track {
+            display: flex;
+            gap: 3rem;
+            padding: 0 5vw;
+            will-change: transform;
+        }
+        
+        .project-card-horizontal {
+            flex-shrink: 0;
+            width: 70vw;
+            max-width: 900px;
+            height: 70vh;
+            position: relative;
+            border-radius: 2rem;
+            overflow: hidden;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+        }
+        
+        .project-card-horizontal:hover {
+            transform: scale(1.02);
+        }
+        
+        .project-card-horizontal:hover .project-image {
+            transform: scale(1.1);
+        }
+        
+        .project-card-horizontal:hover .project-overlay {
+            opacity: 1;
+        }
+        
+        .project-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .project-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.4) 50%, rgba(0,0,0,0.1) 100%);
+            opacity: 0.7;
+            transition: opacity 0.5s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 3rem;
+        }
+        
+        .project-content {
+            transform: translateY(20px);
+            opacity: 0.9;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .project-card-horizontal:hover .project-content {
+            transform: translateY(0);
+            opacity: 1;
+        }
+        
+        /* Progress Bar */
+        .scroll-progress {
+            position: fixed;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 200px;
+            height: 4px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 2px;
+            overflow: hidden;
+            z-index: 50;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        
+        .scroll-progress.visible {
+            opacity: 1;
+        }
+        
+        .scroll-progress-bar {
+            height: 100%;
+            background: #FF775C;
+            width: 0%;
+            transition: width 0.1s;
+            box-shadow: 0 0 10px #FF775C;
+        }
+        
+        /* Magnetic Button */
+        .magnetic-btn {
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        /* Section Reveal */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        
+        /* Gradient Border */
+        .gradient-border {
+            position: relative;
+            background: linear-gradient(135deg, rgba(255,119,92,0.3), rgba(255,184,168,0.1));
+            padding: 1px;
+        }
+        .gradient-border-inner {
+            background: #000;
+            height: 100%;
+            width: 100%;
+        }
+        
+        /* Noise Texture */
+        .noise {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            opacity: 0.03;
+            z-index: 1;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+        }
+        
+        /* Custom Cursor */
+        .custom-cursor {
+            width: var(--cursor-size);
+            height: var(--cursor-size);
+            border: 2px solid #FF775C;
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+            transition: width 0.3s, height 0.3s, background 0.3s;
+            mix-blend-mode: difference;
+        }
+        
+        .custom-cursor.hover {
+            width: var(--cursor-hover-size);
+            height: var(--cursor-hover-size);
+            background: rgba(255, 119, 92, 0.1);
+        }
+        
+        /* Skill Category Badge */
+        .skill-category-badge {
+            background: linear-gradient(135deg, rgba(255,119,92,0.2), rgba(255,119,92,0.05));
+            border: 1px solid rgba(255,119,92,0.3);
+        }
+        
+        /* Role Badge */
+        .role-badge {
+            background: linear-gradient(135deg, rgba(255,119,92,0.15), transparent);
+            border-left: 3px solid #FF775C;
+        }
+    </style>
+</head>
+<body class="antialiased selection:bg-primary-400 selection:text-white">
+
+    <!-- Noise Overlay -->
+    <div class="noise"></div>
+    
+    <!-- Particles Canvas -->
+    <canvas id="particles-canvas"></canvas>
+    
+    <!-- Custom Cursor -->
+    <div class="custom-cursor hidden md:block" id="cursor"></div>
+    
+    <!-- Grid Pattern -->
+    <div class="fixed inset-0 grid-pattern z-0"></div>
+    
+    <!-- Floating Orbs - Coral -->
+    <div class="fixed inset-0 overflow-hidden pointer-events-none z-0">
+        <div class="orb w-96 h-96 bg-primary-600 top-0 -left-48 pulse-glow"></div>
+        <div class="orb w-80 h-80 bg-primary-500 bottom-0 -right-40 pulse-glow" style="animation-delay: 2s;"></div>
+        <div class="orb w-64 h-64 bg-primary-400 top-1/2 left-1/3 pulse-glow" style="animation-delay: 1s;"></div>
+    </div>
+
+    <!-- Scroll Progress Bar -->
+    <div class="scroll-progress" id="scrollProgress">
+        <div class="scroll-progress-bar" id="progressBar"></div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 left-0 right-0 z-50 transition-all duration-300" id="navbar">
+        <div class="w-full px-6 lg:px-12 py-4">
+            <div class="glass-strong rounded-2xl px-6 py-4 flex items-center justify-between max-w-7xl mx-auto">
+                <a href="#" class="font-display font-bold text-2xl tracking-tighter gradient-text magnetic-btn">
+                    0xZee
+                </a>
+                
+                <div class="hidden md:flex items-center gap-8">
+                    <a href="#about" class="text-sm text-gray-400 hover:text-white transition-colors magnetic-btn">About</a>
+                    <a href="#skills" class="text-sm text-gray-400 hover:text-white transition-colors magnetic-btn">Arsenal</a>
+                    <a href="#projects" class="text-sm text-gray-400 hover:text-white transition-colors magnetic-btn">Projects</a>
+                    <a href="#contact" class="text-sm text-gray-400 hover:text-white transition-colors magnetic-btn">Contact</a>
+                </div>
+                
+                <a href="https://github.com/0xzee" target="_blank" class="hidden md:flex items-center gap-2 px-4 py-2 bg-primary-400 hover:bg-primary-500 rounded-full text-sm font-medium transition-all magnetic-btn glow-coral text-black">
+                    <i data-lucide="github" class="w-4 h-4"></i>
+                    <span>GitHub</span>
+                </a>
+                
+                <button class="md:hidden text-white" id="mobile-menu-btn">
+                    <i data-lucide="menu" class="w-6 h-6"></i>
+                </button>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div class="md:hidden glass-strong mx-6 rounded-2xl mt-2 p-6 hidden" id="mobile-menu">
+            <div class="flex flex-col gap-4">
+                <a href="#about" class="text-gray-400 hover:text-white transition-colors">About</a>
+                <a href="#skills" class="text-gray-400 hover:text-white transition-colors">Arsenal</a>
+                <a href="#projects" class="text-gray-400 hover:text-white transition-colors">Projects</a>
+                <a href="#contact" class="text-gray-400 hover:text-white transition-colors">Contact</a>
+                <a href="https://github.com/0xzee" target="_blank" class="flex items-center gap-2 text-primary-400">
+                    <i data-lucide="github" class="w-4 h-4"></i>
+                    <span>GitHub</span>
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative min-h-screen flex items-center justify-center px-6 lg:px-12 pt-20 z-10">
+        <div class="max-w-7xl mx-auto w-full grid lg:grid-cols-2 gap-12 items-center">
+            <div class="space-y-8">
+                <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full glass text-primary-400 text-sm font-medium reveal">
+                    <span class="w-2 h-2 bg-primary-400 rounded-full animate-pulse"></span>
+                    Available for opportunities
+                </div>
+                
+                <!-- Role Badges -->
+                <div class="flex flex-wrap gap-3 reveal">
+                    <span class="role-badge px-4 py-2 rounded-r-full text-sm font-medium text-primary-300">
+                        IT Project Manager
+                    </span>
+                    <span class="role-badge px-4 py-2 rounded-r-full text-sm font-medium text-primary-300">
+                        IT Engineer
+                    </span>
+                </div>
+                
+                <h1 class="font-display text-5xl md:text-7xl lg:text-8xl font-bold leading-tight reveal">
+                    <span class="block text-white">I'm</span>
+                    <span class="gradient-text text-glow typing-cursor" id="typewriter"></span>
+                </h1>
+                
+                <p class="text-lg md:text-xl text-gray-400 max-w-lg leading-relaxed reveal">
+                    Bridging enterprise <span class="text-primary-400 font-medium">IT Project Management</span> with hands-on <span class="text-primary-400 font-medium">Engineering excellence</span>. Leading technical teams while architecting AI, Web3, and Cloud infrastructure solutions.
+                </p>
+                
+                <div class="flex flex-wrap gap-4 reveal">
+                    <a href="#projects" class="group relative px-8 py-4 bg-primary-400 hover:bg-primary-500 rounded-full font-medium transition-all overflow-hidden magnetic-btn glow-coral text-black">
+                        <span class="relative z-10 flex items-center gap-2">
+                            View Projects
+                            <i data-lucide="arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition-transform"></i>
+                        </span>
+                    </a>
+                    <a href="#contact" class="px-8 py-4 glass hover:bg-white/5 rounded-full font-medium transition-all magnetic-btn border border-white/10">
+                        Get in Touch
+                    </a>
+                </div>
+                
+                <div class="flex items-center gap-6 pt-4 reveal">
+                    <a href="https://github.com/0xzee" target="_blank" class="text-gray-400 hover:text-white transition-colors magnetic-btn">
+                        <i data-lucide="github" class="w-5 h-5"></i>
+                    </a>
+                    <a href="https://twitter.com/0xZee" target="_blank" class="text-gray-400 hover:text-white transition-colors magnetic-btn">
+                        <i data-lucide="twitter" class="w-5 h-5"></i>
+                    </a>
+                    <a href="https://linkedin.com/in/0xzee" target="_blank" class="text-gray-400 hover:text-white transition-colors magnetic-btn">
+                        <i data-lucide="linkedin" class="w-5 h-5"></i>
+                    </a>
+                    <div class="h-px flex-1 bg-gradient-to-r from-white/20 to-transparent"></div>
+                </div>
+            </div>
+            
+            <div class="relative hidden lg:block">
+                <div class="relative w-full aspect-square max-w-lg mx-auto">
+                    <!-- Abstract Code Visualization -->
+                    <div class="absolute inset-0 glass rounded-3xl overflow-hidden float">
+                        <div class="absolute inset-0 bg-gradient-to-br from-primary-500/20 via-transparent to-transparent"></div>
+                        <div class="p-8 space-y-4 opacity-60">
+                            <div class="flex gap-2">
+                                <div class="w-3 h-3 rounded-full bg-red-500"></div>
+                                <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
+                                <div class="w-3 h-3 rounded-full bg-green-500"></div>
+                            </div>
+                            <div class="space-y-2 font-mono text-sm">
+                                <div class="flex gap-4">
+                                    <span class="text-gray-600">1</span>
+                                    <span><span class="text-purple-400">class</span> <span class="text-primary-400">ITLeadership</span> {</span>
+                                </div>
+                                <div class="flex gap-4">
+                                    <span class="text-gray-600">2</span>
+                                    <span class="pl-4"><span class="text-blue-400">constructor</span>() {</span>
+                                </div>
+                                <div class="flex gap-4">
+                                    <span class="text-gray-600">3</span>
+                                    <span class="pl-8"><span class="text-purple-400">this</span>.role = <span class="text-green-400">"PM"</span>;</span>
+                                </div>
+                                <div class="flex gap-4">
+                                    <span class="text-gray-600">4</span>
+                                    <span class="pl-8"><span class="text-purple-400">this</span>.stack = <span class="text-green-400">"DevOps"</span>;</span>
+                                </div>
+                                <div class="flex gap-4">
+                                    <span class="text-gray-600">5</span>
+                                    <span class="pl-4">}</span>
+                                </div>
+                                <div class="flex gap-4">
+                                    <span class="text-gray-600">6</span>
+                                    <span class="pl-4"><span class="text-yellow-400">manage</span>() {</span>
+                                </div>
+                                <div class="flex gap-4">
+                                    <span class="text-gray-600">7</span>
+                                    <span class="pl-8"><span class="text-purple-400">return</span> <span class="text-primary-400">Success</span>.deliver();</span>
+                                </div>
+                                <div class="flex gap-4">
+                                    <span class="text-gray-600">8</span>
+                                    <span class="pl-4">}</span>
+                                </div>
+                                <div class="flex gap-4">
+                                    <span class="text-gray-600">9</span>
+                                    <span>}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Floating Elements -->
+                    <div class="absolute -top-8 -right-8 glass px-4 py-3 rounded-2xl float-reverse border border-primary-500/30">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-full bg-gradient-to-br from-primary-400 to-primary-600 flex items-center justify-center">
+                                <i data-lucide="users" class="w-5 h-5 text-black"></i>
+                            </div>
+                            <div>
+                                <div class="text-xs text-gray-400">Team Size</div>
+                                <div class="text-sm font-semibold">15+ Engineers</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="absolute -bottom-4 -left-8 glass px-4 py-3 rounded-2xl float border border-primary-500/30" style="animation-delay: 1s;">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center">
+                                <i data-lucide="cloud" class="w-5 h-5 text-white"></i>
+                            </div>
+                            <div>
+                                <div class="text-xs text-gray-400">Infrastructure</div>
+                                <div class="text-sm font-semibold">Multi-Cloud</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Scroll Indicator -->
+        <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 opacity-50">
+            <span class="text-xs text-gray-500 uppercase tracking-widest">Scroll</span>
+            <div class="w-px h-12 bg-gradient-to-b from-primary-400 to-transparent"></div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="relative py-20 px-6 lg:px-12 z-10">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+                <div class="glass rounded-2xl p-6 text-center reveal">
+                    <div class="text-4xl md:text-5xl font-bold gradient-text mb-2 counter" data-target="30">0</div>
+                    <div class="text-sm text-gray-400">Projects Delivered</div>
+                </div>
+                <div class="glass rounded-2xl p-6 text-center reveal">
+                    <div class="text-4xl md:text-5xl font-bold gradient-text mb-2 counter" data-target="20">0</div>
+                    <div class="text-sm text-gray-400">Years Experience</div>
+                </div>
+                <div class="glass rounded-2xl p-6 text-center reveal">
+                    <div class="text-4xl md:text-5xl font-bold gradient-text mb-2 counter" data-target="13">0</div>
+                    <div class="text-sm text-gray-400">AI Projects</div>
+                </div>
+                <div class="glass rounded-2xl p-6 text-center reveal">
+                    <div class="text-4xl md:text-5xl font-bold gradient-text mb-2 counter" data-target="4">0</div>
+                    <div class="text-sm text-gray-400">Web3 Projects</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="relative py-32 px-6 lg:px-12 z-10">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid lg:grid-cols-2 gap-16 items-center">
+                <div class="space-y-6 reveal">
+                    <h2 class="font-display text-4xl md:text-5xl font-bold">
+                        Leadership Meets <span class="gradient-text">Engineering</span>
+                    </h2>
+                    <p class="text-gray-400 text-lg leading-relaxed">
+                        As an <span class="text-primary-400 font-medium">IT Project Manager</span> and <span class="text-primary-400 font-medium">IT Engineer</span>, I bridge the gap between strategic vision and technical execution. With 8+ years orchestrating enterprise-scale projects, I specialize in leading cross-functional teams while maintaining deep hands-on expertise in cloud architecture, DevOps pipelines, and AI integration.
+                    </p>
+                    <p class="text-gray-400 text-lg leading-relaxed">
+                        My approach combines PMP-certified project management methodologies with cutting-edge engineering practices. From migrating legacy systems to Kubernetes orchestration to implementing LLM-powered automation, I deliver solutions that align business objectives with technical excellence.
+                    </p>
+                    
+                    <div class="flex flex-wrap gap-3 pt-4">
+                        <span class="px-4 py-2 glass rounded-full text-sm text-primary-400 border border-primary-500/20">3-4-5G Archs</span>
+                        <span class="px-4 py-2 glass rounded-full text-sm text-primary-400 border border-primary-500/20">IT DevOps SecOps</span>
+                        <span class="px-4 py-2 glass rounded-full text-sm text-primary-400 border border-primary-500/20">AI & LLM</span>
+                        <span class="px-4 py-2 glass rounded-full text-sm text-primary-400 border border-primary-500/20">Enterprise Arch</span>
+                    </div>
+                </div>
+                
+                <div class="relative reveal">
+                    <div class="aspect-square rounded-3xl glass p-8 relative overflow-hidden">
+                        <div class="absolute inset-0 bg-gradient-to-br from-primary-500/20 to-purple-600/20"></div>
+                        <div class="relative z-10 h-full flex flex-col justify-center space-y-3">
+                            <div class="flex items-center gap-4">
+                                <div class="w-12 h-12 rounded-xl bg-primary-500/20 flex items-center justify-center">
+                                    <i data-lucide="briefcase" class="w-6 h-6 text-primary-400"></i>
+                                </div>
+                                <div>
+                                    <h3 class="font-semibold">Project Management</h3>
+                                    <p class="text-sm text-gray-400">Strategic Planning & Delivery</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-4">
+                                <div class="w-12 h-12 rounded-xl bg-primary-500/20 flex items-center justify-center">
+                                    <i data-lucide="cloud-cog" class="w-6 h-6 text-primary-400"></i>
+                                </div>
+                                <div>
+                                    <h3 class="font-semibold">Cloud Architecture</h3>
+                                    <p class="text-sm text-gray-400">GCP, AWS, Azure Solutions</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-4">
+                                <div class="w-12 h-12 rounded-xl bg-primary-500/20 flex items-center justify-center">
+                                    <i data-lucide="git-branch" class="w-6 h-6 text-primary-400"></i>
+                                </div>
+                                <div>
+                                    <h3 class="font-semibold">DevOps Tech</h3>
+                                    <p class="text-sm text-gray-400">Python, CI/CD & Kubernetes</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-4">
+                                <div class="w-12 h-12 rounded-xl bg-primary-500/20 flex items-center justify-center">
+                                    <i data-lucide="brain" class="w-6 h-6 text-primary-400"></i>
+                                </div>
+                                <div>
+                                    <h3 class="font-semibold">AI Integration</h3>
+                                    <p class="text-sm text-gray-400">AI, Agentic AI, RAG, LLM Orchestration & ML Ops</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section - Enhanced Arsenal -->
+    <section id="skills" class="relative py-32 px-6 lg:px-12 z-10">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16 reveal">
+                <h2 class="font-display text-4xl md:text-5xl font-bold mb-4">
+                    Technical <span class="gradient-text">Arsenal</span>
+                </h2>
+                <p class="text-gray-400 max-w-2xl mx-auto">
+                    Enterprise-grade expertise spanning Project Management, AI/ML, DevOps automation, and Cloud Infrastructure.
+                </p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+                <!-- Project Management -->
+                <div class="skill-card glass rounded-2xl p-6 border border-white/5 reveal">
+                    <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-primary-400 to-primary-600 flex items-center justify-center mb-4">
+                        <i data-lucide="kanban" class="w-6 h-6 text-black"></i>
+                    </div>
+                    <h3 class="font-display text-xl font-bold mb-4">Project Management</h3>
+                    <ul class="space-y-2 text-gray-400">
+                        <li class="flex items-center gap-2">
+                            <i data-lucide="check-circle" class="w-4 h-4 text-primary-400"></i>
+                            PMP Certified
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <i data-lucide="check-circle" class="w-4 h-4 text-primary-400"></i>
+                            Agile
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <i data-lucide="check-circle" class="w-4 h-4 text-primary-400"></i>
+                            Risk Management
+                        </li>
+                    </ul>
+                </div>
+                
+                <!-- AI/ML -->
+                <div class="skill-card glass rounded-2xl p-6 border border-white/5 reveal">
+                    <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-primary-400 to-red-600 flex items-center justify-center mb-4">
+                        <i data-lucide="brain" class="w-6 h-6 text-white"></i>
+                    </div>
+                    <h3 class="font-display text-xl font-bold mb-4">AI/ML Engineering</h3>
+                    <ul class="space-y-2 text-gray-400">
+                        <li class="flex items-center gap-2">
+                            <i data-lucide="check-circle" class="w-4 h-4 text-primary-400"></i>
+                            TensorFlow, PyTorch
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <i data-lucide="check-circle" class="w-4 h-4 text-primary-400"></i>
+                            AI Frameworks, Agentic AI
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <i data-lucide="check-circle" class="w-4 h-4 text-primary-400"></i>
+                            Ollama, Hugging Face, Unsloth (fine tunning)
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <i data-lucide="check-circle" class="w-4 h-4 text-primary-400"></i>
+                            Data VectorStores : PGVector, Mongo Atlas, Qdrant..
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <i data-lucide="check-circle" class="w-4 h-4 text-primary-400"></i>
+                            Jupyter/Notebook, Python, DataOps
+                        </li>
+                    </ul>
+                </div>
+                
+                <!-- LLM Stack -->
+                <div class="skill-card glass rounded-2xl p-6 border border-white/5 reveal">
+                    <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-primary-400 to-yellow-600 flex items-center justify-center mb-4">
+                        <i data-lucide="message-square" class="w-6 h-6 text-white"></i>
+                    </div>
+                    <h3 class="font-display text-xl font-bold mb-4">AI & LLM Stack</h3>
+                    <ul class="space-y-2 text-gray-400">
+                        <li class="flex items-center gap-2">
+                            <i data-lucide="check-circle" class="w-4 h-4 text-primary-400"></i>
+                            LangChain
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <i data-lucide="check-circle" class="w-4 h-4 text-primary-400"></i>
+                            LangGraph
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <i data-lucide="check-circle" class="w-4 h-4 text-primary-400"></i>
+                            LlamaIndex
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <i data-lucide="check-circle" class="w-4 h-4 text-primary-400"></i>
+                            CrewAI
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <i data-lucide="check-circle" class="w-4 h-4 text-primary-400"></i>
+                            OpenClaw
+                        </li>
+                    </ul>
+                </div>
+                
+                <!-- DevOps - Enhanced -->
+                <div class="skill-card glass rounded-2xl p-6 border border-white/5 reveal">
+                    <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-primary-400 to-blue-600 flex items-center justify-center mb-4">
+                        <i data-lucide="git-branch" class="w-6 h-6 text-white"></i>
+                    </div>
+                    <h3 class="font-display text-xl font-bold mb-4">DevOps</h3>
+                    <ul class="space-y-2 text-gray-400">
+                        <li class="flex items-center gap-2">
+                            <i data-lucide="check-circle" class="w-4 h-4 text-primary-400"></i>
+                            Git/GitHub/GitLab
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <i data-lucide="check-circle" class="w-4 h-4 text-primary-400"></i>
+                            Jenkins CI/CD
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <i data-lucide="check-circle" class="w-4 h-4 text-primary-400"></i>
+                            Docker & Compose
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <i data-lucide="check-circle" class="w-4 h-4 text-primary-400"></i>
+                            Kubernetes (K8s)
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <i data-lucide="check-circle" class="w-4 h-4 text-primary-400"></i>
+                            Ansible Automation
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <i data-lucide="check-circle" class="w-4 h-4 text-primary-400"></i>
+                            Terraform IaC
+                        </li>
+                    </ul>
+                </div>
+                
+                <!-- CloudOps - New Category -->
+                <div class="skill-card glass rounded-2xl p-6 border border-white/5 reveal">
+                    <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-primary-400 to-cyan-600 flex items-center justify-center mb-4">
+                        <i data-lucide="cloud" class="w-6 h-6 text-white"></i>
+                    </div>
+                    <h3 class="font-display text-xl font-bold mb-4">CloudOps</h3>
+                    <ul class="space-y-2 text-gray-400">
+                        <li class="flex items-center gap-2">
+                            <i data-lucide="check-circle" class="w-4 h-4 text-primary-400"></i>
+                            Google BigQuery
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <i data-lucide="check-circle" class="w-4 h-4 text-primary-400"></i>
+                            Vertex AI (GCP)
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <i data-lucide="check-circle" class="w-4 h-4 text-primary-400"></i>
+                            Cloud IDE (Gitpod/Codespaces)
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <i data-lucide="check-circle" class="w-4 h-4 text-primary-400"></i>
+                            AWS/Azure Basics
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <i data-lucide="check-circle" class="w-4 h-4 text-primary-400"></i>
+                            Cloud Monitoring
+                        </li>
+                    </ul>
+                </div>
+                
+                <!-- DataOps -->
+                <div class="skill-card glass rounded-2xl p-6 border border-white/5 reveal">
+                    <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-primary-400 to-pink-600 flex items-center justify-center mb-4">
+                        <i data-lucide="database" class="w-6 h-6 text-white"></i>
+                    </div>
+                    <h3 class="font-display text-xl font-bold mb-4">DataOps</h3>
+                    <ul class="space-y-2 text-gray-400">
+                        <li class="flex items-center gap-2">
+                            <i data-lucide="check-circle" class="w-4 h-4 text-primary-400"></i>
+                            ChromaDB, FAISS
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <i data-lucide="check-circle" class="w-4 h-4 text-primary-400"></i>
+                            PGVector
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <i data-lucide="check-circle" class="w-4 h-4 text-primary-400"></i>
+                            Qdrant
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <i data-lucide="check-circle" class="w-4 h-4 text-primary-400"></i>
+                            MongoDB Atlas
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <i data-lucide="check-circle" class="w-4 h-4 text-primary-400"></i>
+                            Supabase
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- MLOps Row -->
+            <div class="max-w-md mx-auto">
+                <div class="skill-card glass rounded-2xl p-6 border border-white/5 reveal">
+                    <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-primary-400 to-purple-600 flex items-center justify-center mb-4">
+                        <i data-lucide="container" class="w-6 h-6 text-white"></i>
+                    </div>
+                    <h3 class="font-display text-xl font-bold mb-4">MLOps</h3>
+                    <ul class="space-y-2 text-gray-400">
+                        <li class="flex items-center gap-2">
+                            <i data-lucide="check-circle" class="w-4 h-4 text-primary-400"></i>
+                            MLflow
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <i data-lucide="check-circle" class="w-4 h-4 text-primary-400"></i>
+                            Kubeflow
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <i data-lucide="check-circle" class="w-4 h-4 text-primary-400"></i>
+                            Model Monitoring
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <i data-lucide="check-circle" class="w-4 h-4 text-primary-400"></i>
+                            A/B Testing
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- Additional Tech Tags -->
+            <div class="mt-12 flex flex-wrap justify-center gap-3 reveal">
+                <span class="px-4 py-2 glass rounded-full text-sm text-gray-400 border border-white/10 hover:border-primary-500/50 hover:text-primary-400 transition-all cursor-default">Python</span>
+                <span class="px-4 py-2 glass rounded-full text-sm text-gray-400 border border-white/10 hover:border-primary-500/50 hover:text-primary-400 transition-all cursor-default">JavaScript</span>
+                <span class="px-4 py-2 glass rounded-full text-sm text-gray-400 border border-white/10 hover:border-primary-500/50 hover:text-primary-400 transition-all cursor-default">DB</span>
+                <span class="px-4 py-2 glass rounded-full text-sm text-gray-400 border border-white/10 hover:border-primary-500/50 hover:text-primary-400 transition-all cursor-default">K8S</span>
+                <span class="px-4 py-2 glass rounded-full text-sm text-gray-400 border border-white/10 hover:border-primary-500/50 hover:text-primary-400 transition-all cursor-default">Pydantic</span>
+                <span class="px-4 py-2 glass rounded-full text-sm text-gray-400 border border-white/10 hover:border-primary-500/50 hover:text-primary-400 transition-all cursor-default">VS Code</span>
+                <span class="px-4 py-2 glass rounded-full text-sm text-gray-400 border border-white/10 hover:border-primary-500/50 hover:text-primary-400 transition-all cursor-default">Jenkins</span>
+                <span class="px-4 py-2 glass rounded-full text-sm text-gray-400 border border-white/10 hover:border-primary-500/50 hover:text-primary-400 transition-all cursor-default">Confluence</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section - Horizontal Scroll Magic -->
+    <section id="projects" class="horizontal-section z-10">
+        <div class="horizontal-container">
+            <div class="w-full px-6 lg:px-12 mb-8 absolute top-8 left-0 z-20">
+                <div class="max-w-7xl mx-auto flex items-end justify-between">
+                    <div>
+                        <h2 class="font-display text-4xl md:text-5xl font-bold mb-2">
+                            Featured <span class="gradient-text">Projects</span>
+                        </h2>
+                        <p class="text-gray-400 max-w-xl">
+                            Enterprise solutions and technical architectures delivered with precision. Scroll horizontally to explore.
+                        </p>
+                    </div>
+                    <div class="hidden md:flex items-center gap-2 text-sm text-gray-500">
+                        <i data-lucide="mouse-pointer-click" class="w-4 h-4"></i>
+                        <span>Scroll to navigate</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="horizontal-track" id="horizontalTrack">
+                <!-- Project 1 -->
+                <div class="project-card-horizontal glass">
+                    <div class="absolute inset-0 bg-gradient-to-br from-primary-900/40 to-black">
+                        <div class="absolute inset-0 flex items-center justify-center">
+                            <i data-lucide="kanban-square" class="w-32 h-32 text-primary-500/20"></i>
+                        </div>
+                    </div>
+                    <div class="project-overlay">
+                        <div class="project-content">
+                            <div class="flex items-center gap-2 mb-3">
+                                <span class="px-3 py-1 rounded-full text-xs bg-primary-500/20 text-primary-400 border border-primary-500/30">Project Management</span>
+                                <span class="px-3 py-1 rounded-full text-xs bg-blue-500/20 text-blue-400 border border-blue-500/30">Enterprise</span>
+                            </div>
+                            <h3 class="font-display text-3xl font-bold mb-3">Enterprise Agile Transformation</h3>
+                            <p class="text-gray-300 mb-4 max-w-lg">Led organization-wide Agile transformation for Web Access Stack. Implemented Planning framework reducing time-to-deliver by 30%.</p>
+                            <div class="flex items-center gap-4">
+                                <span class="text-sm text-gray-400 flex items-center gap-1">
+                                    <i data-lucide="users" class="w-4 h-4"></i> 4 Teams
+                                </span>
+                                <span class="text-sm text-gray-400 flex items-center gap-1">
+                                    <i data-lucide="clock" class="w-4 h-4"></i> 8 Months
+                                </span>
+                                <span class="text-sm text-primary-400 flex items-center gap-1">
+                                    <i data-lucide="trending-up" class="w-4 h-4"></i> +50% Velocity
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 2 -->
+                <div class="project-card-horizontal glass">
+                    <div class="absolute inset-0 bg-gradient-to-br from-blue-900/40 to-black">
+                        <div class="absolute inset-0 flex items-center justify-center">
+                            <i data-lucide="cloud" class="w-32 h-32 text-blue-500/20"></i>
+                        </div>
+                    </div>
+                    <div class="project-overlay">
+                        <div class="project-content">
+                            <div class="flex items-center gap-2 mb-3">
+                                <span class="px-3 py-1 rounded-full text-xs bg-blue-500/20 text-blue-400 border border-blue-500/30">CloudOps</span>
+                                <span class="px-3 py-1 rounded-full text-xs bg-purple-500/20 text-purple-400 border border-purple-500/30">GCP</span>
+                            </div>
+                            <h3 class="font-display text-3xl font-bold mb-3">Multi-Cloud Infrastructure Migration</h3>
+                            <p class="text-gray-300 mb-4 max-w-lg">Architected and executed migration of legacy on-premise infrastructure to On-Premise Cloud. Infrastructure and Applications 99.99% uptime SLA.</p>
+                            <div class="flex items-center gap-4">
+                                <span class="text-sm text-gray-400 flex items-center gap-1">
+                                    <i data-lucide="server" class="w-4 h-4"></i> 200+ VMs
+                                </span>
+                                <span class="text-sm text-gray-400 flex items-center gap-1">
+                                    <i data-lucide="shield" class="w-4 h-4"></i> Compliant
+                                </span>
+                                <span class="text-sm text-primary-400 flex items-center gap-1">
+                                    <i data-lucide="zap" class="w-4 h-4"></i> 99.99% Uptime
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 3 -->
+                <div class="project-card-horizontal glass">
+                    <div class="absolute inset-0 bg-gradient-to-br from-purple-900/40 to-black">
+                        <div class="absolute inset-0 flex items-center justify-center">
+                            <i data-lucide="brain-circuit" class="w-32 h-32 text-purple-500/20"></i>
+                        </div>
+                    </div>
+                    <div class="project-overlay">
+                        <div class="project-content">
+                            <div class="flex items-center gap-2 mb-3">
+                                <span class="px-3 py-1 rounded-full text-xs bg-purple-500/20 text-purple-400 border border-purple-500/30">AI/ML</span>
+                                <span class="px-3 py-1 rounded-full text-xs bg-orange-500/20 text-orange-400 border border-orange-500/30">LLM</span>
+                            </div>
+                            <h3 class="font-display text-3xl font-bold mb-3">Enterprise AI Agent Platform</h3>
+                            <p class="text-gray-300 mb-4 max-w-lg">Built autonomous AI agent system using LangGraph and CrewAI for Data Exploitation. Reduced Ops search time by 65%.</p>
+                            <div class="flex items-center gap-4">
+                                <span class="text-sm text-gray-400 flex items-center gap-1">
+                                    <i data-lucide="cpu" class="w-4 h-4"></i> Vertex AI
+                                </span>
+                                <span class="text-sm text-gray-400 flex items-center gap-1">
+                                    <i data-lucide="message-circle" class="w-4 h-4"></i> GPT-4/Claude/Ollama
+                                </span>
+                                <span class="text-sm text-primary-400 flex items-center gap-1">
+                                    <i data-lucide="percent" class="w-4 h-4"></i> -65% Seach Time
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 4 -->
+                <div class="project-card-horizontal glass">
+                    <div class="absolute inset-0 bg-gradient-to-br from-green-900/40 to-black">
+                        <div class="absolute inset-0 flex items-center justify-center">
+                            <i data-lucide="container" class="w-32 h-32 text-green-500/20"></i>
+                        </div>
+                    </div>
+                    <div class="project-overlay">
+                        <div class="project-content">
+                            <div class="flex items-center gap-2 mb-3">
+                                <span class="px-3 py-1 rounded-full text-xs bg-green-500/20 text-green-400 border border-green-500/30">DevOps</span>
+                                <span class="px-3 py-1 rounded-full text-xs bg-blue-500/20 text-blue-400 border border-blue-500/30">Kubernetes</span>
+                            </div>
+                            <h3 class="font-display text-3xl font-bold mb-3">K8s GitOps Pipeline</h3>
+                            <p class="text-gray-300 mb-4 max-w-lg">Implemented end-to-end GitOps workflow using ArgoCD, Terraform, and Jenkins. Reduced deployment time from days to minutes.</p>
+                            <div class="flex items-center gap-4">
+                                <span class="text-sm text-gray-400 flex items-center gap-1">
+                                    <i data-lucide="git-commit" class="w-4 h-4"></i> 10+ Microservices
+                                </span>
+                                <span class="text-sm text-gray-400 flex items-center gap-1">
+                                    <i data-lucide="rocket" class="w-4 h-4"></i> 10+ Deploys/Month
+                                </span>
+                                <span class="text-sm text-primary-400 flex items-center gap-1">
+                                    <i data-lucide="timer" class="w-4 h-4"></i> -90% Deploy Time
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 5 -->
+                <div class="project-card-horizontal glass">
+                    <div class="absolute inset-0 bg-gradient-to-br from-yellow-900/40 to-black">
+                        <div class="absolute inset-0 flex items-center justify-center">
+                            <i data-lucide="hexagon" class="w-32 h-32 text-yellow-500/20"></i>
+                        </div>
+                    </div>
+                    <div class="project-overlay">
+                        <div class="project-content">
+                            <div class="flex items-center gap-2 mb-3">
+                                <span class="px-3 py-1 rounded-full text-xs bg-yellow-500/20 text-yellow-400 border border-yellow-500/30">Web3</span>
+                                <span class="px-3 py-1 rounded-full text-xs bg-purple-500/20 text-purple-400 border border-purple-500/30">Blockchain</span>
+                            </div>
+                            <h3 class="font-display text-3xl font-bold mb-3">DeFi Analytics Dashboard</h3>
+                            <p class="text-gray-300 mb-4 max-w-lg">Demo Real-time blockchain analytics platform. Integrated AI for predictive market analysis and anomaly detection. Build an ERC20 Smart Contract Token on Ethereum Blockchain (Solidity)</p>
+                            <div class="flex items-center gap-4">
+                                <span class="text-sm text-gray-400 flex items-center gap-1">
+                                    <i data-lucide="database" class="w-4 h-4"></i> ERC20
+                                </span>
+                                <span class="text-sm text-gray-400 flex items-center gap-1">
+                                    <i data-lucide="activity" class="w-4 h-4"></i> Solidity
+                                </span>
+                                <span class="text-sm text-primary-400 flex items-center gap-1">
+                                    <i data-lucide="bar-chart" class="w-4 h-4"></i> Ethereum
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 6 -->
+                <div class="project-card-horizontal glass">
+                    <div class="absolute inset-0 bg-gradient-to-br from-red-900/40 to-black">
+                        <div class="absolute inset-0 flex items-center justify-center">
+                            <i data-lucide="shield-check" class="w-32 h-32 text-red-500/20"></i>
+                        </div>
+                    </div>
+                    <div class="project-overlay">
+                        <div class="project-content">
+                            <div class="flex items-center gap-2 mb-3">
+                                <span class="px-3 py-1 rounded-full text-xs bg-red-500/20 text-red-400 border border-red-500/30">Kubernetes</span>
+                                <span class="px-3 py-1 rounded-full text-xs bg-green-500/20 text-green-400 border border-green-500/30">DevSecOps</span>
+                            </div>
+                            <h3 class="font-display text-3xl font-bold mb-3">Multi-Sites Architecture BCP</h3>
+                            <p class="text-gray-300 mb-4 max-w-lg">Helped Design and execute Disaster Recovery Plan for Resilient Multi-Sites network architecture across hybrid cloud environment. PRA compliance.</p>
+                            <div class="flex items-center gap-4">
+                                <span class="text-sm text-gray-400 flex items-center gap-1">
+                                    <i data-lucide="lock" class="w-4 h-4"></i> Network
+                                </span>
+                                <span class="text-sm text-gray-400 flex items-center gap-1">
+                                    <i data-lucide="award" class="w-4 h-4"></i> K8S
+                                </span>
+                                <span class="text-sm text-primary-400 flex items-center gap-1">
+                                    <i data-lucide="check-circle" class="w-4 h-4"></i> BCP
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Navigation Dots -->
+            <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex gap-2 z-20" id="navDots">
+                <button class="w-2 h-2 rounded-full bg-primary-400 transition-all" data-index="0"></button>
+                <button class="w-2 h-2 rounded-full bg-white/30 transition-all" data-index="1"></button>
+                <button class="w-2 h-2 rounded-full bg-white/30 transition-all" data-index="2"></button>
+                <button class="w-2 h-2 rounded-full bg-white/30 transition-all" data-index="3"></button>
+                <button class="w-2 h-2 rounded-full bg-white/30 transition-all" data-index="4"></button>
+                <button class="w-2 h-2 rounded-full bg-white/30 transition-all" data-index="5"></button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="relative py-32 px-6 lg:px-12 z-10">
+        <div class="max-w-4xl mx-auto">
+            <div class="glass rounded-3xl p-8 md:p-12 border border-white/10 reveal">
+                <div class="text-center mb-12">
+                    <h2 class="font-display text-4xl md:text-5xl font-bold mb-4">
+                        Let's Build the <span class="gradient-text">Future</span>
+                    </h2>
+                    <p class="text-gray-400">
+                        Open for IT Project Management, Engineering Leadership, and Technical Consulting opportunities.
+                    </p>
+                </div>
+                
+                <div class="grid md:grid-cols-2 gap-8 mb-12">
+                    <a href="mailto:0xzee@proton.me" class="flex items-center gap-4 p-6 glass rounded-2xl hover:border-primary-500/50 transition-all border border-transparent group">
+                        <div class="w-12 h-12 rounded-xl bg-primary-500/20 flex items-center justify-center group-hover:bg-primary-500/30 transition-colors">
+                            <i data-lucide="mail" class="w-6 h-6 text-primary-400"></i>
+                        </div>
+                        <div>
+                            <div class="text-sm text-gray-400">Email</div>
+                            <div class="font-medium">0xzee@proton.me</div>
+                        </div>
+                    </a>
+                    
+                    <a href="https://github.com/0xzee" target="_blank" class="flex items-center gap-4 p-6 glass rounded-2xl hover:border-primary-500/50 transition-all border border-transparent group">
+                        <div class="w-12 h-12 rounded-xl bg-primary-500/20 flex items-center justify-center group-hover:bg-primary-500/30 transition-colors">
+                            <i data-lucide="github" class="w-6 h-6 text-primary-400"></i>
+                        </div>
+                        <div>
+                            <div class="text-sm text-gray-400">GitHub</div>
+                            <div class="font-medium">@0xzee-dev</div>
+                        </div>
+                    </a>
+                    
+                    <a href="https://twitter.com/0xZee" target="_blank" class="flex items-center gap-4 p-6 glass rounded-2xl hover:border-primary-500/50 transition-all border border-transparent group">
+                        <div class="w-12 h-12 rounded-xl bg-primary-500/20 flex items-center justify-center group-hover:bg-primary-500/30 transition-colors">
+                            <i data-lucide="twitter" class="w-6 h-6 text-primary-400"></i>
+                        </div>
+                        <div>
+                            <div class="text-sm text-gray-400">Twitter</div>
+                            <div class="font-medium">@0xZee_</div>
+                        </div>
+                    </a>
+                    
+                    <a href="https://linkedin.com/in/0xzee" target="_blank" class="flex items-center gap-4 p-6 glass rounded-2xl hover:border-primary-500/50 transition-all border border-transparent group">
+                        <div class="w-12 h-12 rounded-xl bg-primary-500/20 flex items-center justify-center group-hover:bg-primary-500/30 transition-colors">
+                            <i data-lucide="linkedin" class="w-6 h-6 text-primary-400"></i>
+                        </div>
+                        <div>
+                            <div class="text-sm text-gray-400">LinkedIn</div>
+                            <div class="font-medium">/in/0xzee</div>
+                        </div>
+                    </a>
+                </div>
+                
+                <form class="space-y-6" onsubmit="event.preventDefault(); alert('Message sent! (Demo form)');">
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-sm text-gray-400 mb-2">Name</label>
+                            <input type="text" class="w-full px-4 py-3 glass rounded-xl bg-transparent border border-white/10 focus:border-primary-500/50 focus:outline-none transition-colors" placeholder="John Doe">
+                        </div>
+                        <div>
+                            <label class="block text-sm text-gray-400 mb-2">Email</label>
+                            <input type="email" class="w-full px-4 py-3 glass rounded-xl bg-transparent border border-white/10 focus:border-primary-500/50 focus:outline-none transition-colors" placeholder="john@example.com">
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-sm text-gray-400 mb-2">Project Type</label>
+                        <select class="w-full px-4 py-3 glass rounded-xl bg-transparent border border-white/10 focus:border-primary-500/50 focus:outline-none transition-colors text-white">
+                            <option value="" class="bg-black">Select a service...</option>
+                            <option value="pm" class="bg-black">IT Project Management</option>
+                            <option value="devops" class="bg-black">DevOps Consulting</option>
+                            <option value="cloud" class="bg-black">Cloud Architecture</option>
+                            <option value="ai" class="bg-black">AI Integration</option>
+                            <option value="engineering" class="bg-black">Engineering Leadership</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-sm text-gray-400 mb-2">Message</label>
+                        <textarea rows="5" class="w-full px-4 py-3 glass rounded-xl bg-transparent border border-white/10 focus:border-primary-500/50 focus:outline-none transition-colors resize-none" placeholder="Tell me about your project..."></textarea>
+                    </div>
+                    <button type="submit" class="w-full py-4 bg-primary-400 hover:bg-primary-500 rounded-xl font-medium transition-all glow-coral text-black magnetic-btn">
+                        Send Message
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="relative py-12 px-6 lg:px-12 border-t border-white/5 z-10">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
+            <div class="flex items-center gap-2">
+                <span class="font-display font-bold text-2xl gradient-text">0xZee</span>
+                <span class="text-gray-600">|</span>
+                <span class="text-gray-400 text-sm">IT PM & Engineer</span>
+            </div>
+            
+            <div class="flex items-center gap-8">
+                <a href="#about" class="text-sm text-gray-400 hover:text-white transition-colors">About</a>
+                <a href="#skills" class="text-sm text-gray-400 hover:text-white transition-colors">Arsenal</a>
+                <a href="#projects" class="text-sm text-gray-400 hover:text-white transition-colors">Projects</a>
+                <a href="#contact" class="text-sm text-gray-400 hover:text-white transition-colors">Contact</a>
+            </div>
+            
+            <div class="flex items-center gap-4">
+                <a href="https://github.com/0xzee" target="_blank" class="w-10 h-10 rounded-full glass flex items-center justify-center text-gray-400 hover:text-white hover:border-primary-500/50 transition-all">
+                    <i data-lucide="github" class="w-5 h-5"></i>
+                </a>
+                <a href="https://twitter.com/0xZee" target="_blank" class="w-10 h-10 rounded-full glass flex items-center justify-center text-gray-400 hover:text-white hover:border-primary-500/50 transition-all">
+                    <i data-lucide="twitter" class="w-5 h-5"></i>
+                </a>
+                <a href="https://linkedin.com/in/0xzee" target="_blank" class="w-10 h-10 rounded-full glass flex items-center justify-center text-gray-400 hover:text-white hover:border-primary-500/50 transition-all">
+                    <i data-lucide="linkedin" class="w-5 h-5"></i>
+                </a>
+            </div>
+        </div>
+        <div class="max-w-7xl mx-auto mt-8 pt-8 border-t border-white/5 text-center text-sm text-gray-500">
+            <p>&copy; 2025 0xZee. All rights reserved. PMP® Certified IT Project Manager & Engineer.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Initialize Lucide Icons
+        lucide.createIcons();
+        
+        // Register GSAP ScrollTrigger
+        gsap.registerPlugin(ScrollTrigger);
+        
+        // Typewriter Effect - Updated Roles
+        const words = ["0xZee", "IT Project Manager", "IT Engineer", "AI Enthousiastic", "DevOps Tech", "Cloud Ops", "Blockchain & Web3 Enthousiastic"];
+        let wordIndex = 0;
+        let charIndex = 0;
+        let isDeleting = false;
+        const typewriterElement = document.getElementById('typewriter');
+        
+        function typeWriter() {
+            const currentWord = words[wordIndex];
+            
+            if (isDeleting) {
+                typewriterElement.textContent = currentWord.substring(0, charIndex - 1);
+                charIndex--;
+            } else {
+                typewriterElement.textContent = currentWord.substring(0, charIndex + 1);
+                charIndex++;
+            }
+            
+            let typeSpeed = isDeleting ? 50 : 100;
+            
+            if (!isDeleting && charIndex === currentWord.length) {
+                typeSpeed = 2000;
+                isDeleting = true;
+            } else if (isDeleting && charIndex === 0) {
+                isDeleting = false;
+                wordIndex = (wordIndex + 1) % words.length;
+                typeSpeed = 500;
+            }
+            
+            setTimeout(typeWriter, typeSpeed);
+        }
+        
+        // Start typewriter
+        typeWriter();
+        
+        // Reveal Animations with ScrollTrigger
+        const revealElements = document.querySelectorAll('.reveal');
+        
+        revealElements.forEach((element, index) => {
+            gsap.fromTo(element, 
+                {
+                    opacity: 0,
+                    y: 30
+                },
+                {
+                    opacity: 1,
+                    y: 0,
+                    duration: 0.8,
+                    ease: "power3.out",
+                    scrollTrigger: {
+                        trigger: element,
+                        start: "top 85%",
+                        toggleActions: "play none none reverse"
+                    },
+                    delay: index * 0.1
+                }
+            );
+        });
+        
+        // Counter Animation
+        const counters = document.querySelectorAll('.counter');
+        
+        counters.forEach(counter => {
+            const target = parseInt(counter.getAttribute('data-target'));
+            
+            ScrollTrigger.create({
+                trigger: counter,
+                start: "top 85%",
+                onEnter: () => {
+                    gsap.to(counter, {
+                        innerHTML: target,
+                        duration: 2,
+                        snap: { innerHTML: 1 },
+                        ease: "power2.out",
+                        onUpdate: function() {
+                            counter.innerHTML = Math.ceil(this.targets()[0].innerHTML) + "+";
+                        }
+                    });
+                }
+            });
+        });
+        
+        // Horizontal Scroll Magic
+        const horizontalSection = document.querySelector('.horizontal-section');
+        const horizontalTrack = document.getElementById('horizontalTrack');
+        const scrollProgress = document.getElementById('scrollProgress');
+        const progressBar = document.getElementById('progressBar');
+        const navDots = document.querySelectorAll('#navDots button');
+        
+        if (horizontalSection && horizontalTrack) {
+            const cards = horizontalTrack.querySelectorAll('.project-card-horizontal');
+            const totalWidth = (cards.length * (window.innerWidth * 0.7 + 48)) - window.innerWidth + (window.innerWidth * 0.3);
+            
+            // Show progress bar when in section
+            ScrollTrigger.create({
+                trigger: horizontalSection,
+                start: "top 80%",
+                end: "bottom 20%",
+                onEnter: () => scrollProgress.classList.add('visible'),
+                onLeave: () => scrollProgress.classList.remove('visible'),
+                onEnterBack: () => scrollProgress.classList.add('visible'),
+                onLeaveBack: () => scrollProgress.classList.remove('visible')
+            });
+            
+            // Horizontal scroll animation
+            const scrollTween = gsap.to(horizontalTrack, {
+                x: () => -(totalWidth),
+                ease: "none",
+                scrollTrigger: {
+                    trigger: horizontalSection,
+                    start: "top top",
+                    end: () => `+=${totalWidth}`,
+                    scrub: 1,
+                    pin: true,
+                    anticipatePin: 1,
+                    invalidateOnRefresh: true,
+                    onUpdate: (self) => {
+                        // Update progress bar
+                        progressBar.style.width = (self.progress * 100) + '%';
+                        
+                        // Update dots
+                        const activeIndex = Math.min(
+                            Math.floor(self.progress * cards.length),
+                            cards.length - 1
+                        );
+                        navDots.forEach((dot, i) => {
+                            if (i === activeIndex) {
+                                dot.classList.remove('bg-white/30');
+                                dot.classList.add('bg-primary-400', 'w-6');
+                            } else {
+                                dot.classList.add('bg-white/30');
+                                dot.classList.remove('bg-primary-400', 'w-6');
+                            }
+                        });
+                    }
+                }
+            });
+            
+            // Parallax effect on images during horizontal scroll
+            cards.forEach((card) => {
+                const image = card.querySelector('.project-image') || card.querySelector('.absolute');
+                if (image) {
+                    gsap.fromTo(image, 
+                        { x: '-10%' },
+                        {
+                            x: '10%',
+                            ease: "none",
+                            scrollTrigger: {
+                                trigger: card,
+                                containerAnimation: scrollTween,
+                                start: "left right",
+                                end: "right left",
+                                scrub: true
+                            }
+                        }
+                    );
+                }
+            });
+            
+            // Skew effect based on velocity
+            let skewProxy = { skew: 0 };
+            let skewSetter = gsap.quickSetter(cards, "skewX", "deg");
+            let clamp = gsap.utils.clamp(-5, 5);
+            
+            ScrollTrigger.create({
+                trigger: horizontalSection,
+                start: "top top",
+                end: "bottom bottom",
+                onUpdate: (self) => {
+                    let skew = clamp(self.getVelocity() / -300);
+                    if (Math.abs(skew) > Math.abs(skewProxy.skew)) {
+                        skewProxy.skew = skew;
+                        gsap.to(skewProxy, {
+                            skew: 0,
+                            duration: 0.8,
+                            ease: "power3",
+                            overwrite: true,
+                            onUpdate: () => skewSetter(skewProxy.skew)
+                        });
+                    }
+                }
+            });
+            
+            // Click on dots to navigate
+            navDots.forEach((dot, index) => {
+                dot.addEventListener('click', () => {
+                    const progress = index / (cards.length - 1);
+                    const scrollTo = horizontalSection.offsetTop + (totalWidth * progress);
+                    window.scrollTo({
+                        top: scrollTo,
+                        behavior: 'smooth'
+                    });
+                });
+            });
+        }
+        
+        // Particle System with Coral Color
+        const canvas = document.getElementById('particles-canvas');
+        const ctx = canvas.getContext('2d');
+        
+        let width, height;
+        let particles = [];
+        const particleCount = 50;
+        const connectionDistance = 100;
+        
+        function resize() {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+        }
+        
+        class Particle {
+            constructor() {
+                this.x = Math.random() * width;
+                this.y = Math.random() * height;
+                this.vx = (Math.random() - 0.5) * 0.5;
+                this.vy = (Math.random() - 0.5) * 0.5;
+                this.radius = Math.random() * 2 + 1;
+            }
+            
+            update() {
+                this.x += this.vx;
+                this.y += this.vy;
+                
+                if (this.x < 0 || this.x > width) this.vx *= -1;
+                if (this.y < 0 || this.y > height) this.vy *= -1;
+            }
+            
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                ctx.fillStyle = 'rgba(255, 119, 92, 0.5)';
+                ctx.fill();
+            }
+        }
+        
+        function initParticles() {
+            particles = [];
+            for (let i = 0; i < particleCount; i++) {
+                particles.push(new Particle());
+            }
+        }
+        
+        function animateParticles() {
+            ctx.clearRect(0, 0, width, height);
+            
+            particles.forEach((particle, i) => {
+                particle.update();
+                particle.draw();
+                
+                // Connect particles
+                for (let j = i + 1; j < particles.length; j++) {
+                    const dx = particle.x - particles[j].x;
+                    const dy = particle.y - particles[j].y;
+                    const distance = Math.sqrt(dx * dx + dy * dy);
+                    
+                    if (distance < connectionDistance) {
+                        ctx.beginPath();
+                        ctx.moveTo(particle.x, particle.y);
+                        ctx.lineTo(particles[j].x, particles[j].y);
+                        ctx.strokeStyle = `rgba(255, 119, 92, ${0.2 * (1 - distance / connectionDistance)})`;
+                        ctx.stroke();
+                    }
+                }
+            });
+            
+            requestAnimationFrame(animateParticles);
+        }
+        
+        resize();
+        initParticles();
+        animateParticles();
+        
+        window.addEventListener('resize', () => {
+            resize();
+            initParticles();
+        });
+        
+        // Custom Cursor
+        const cursor = document.getElementById('cursor');
+        let mouseX = 0, mouseY = 0;
+        let cursorX = 0, cursorY = 0;
+        
+        document.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+        });
+        
+        function animateCursor() {
+            const dx = mouseX - cursorX;
+            const dy = mouseY - cursorY;
+            
+            cursorX += dx * 0.1;
+            cursorY += dy * 0.1;
+            
+            cursor.style.left = cursorX - 10 + 'px';
+            cursor.style.top = cursorY - 10 + 'px';
+            
+            requestAnimationFrame(animateCursor);
+        }
+        
+        animateCursor();
+        
+        // Magnetic effect for buttons
+        const magneticElements = document.querySelectorAll('.magnetic-btn');
+        
+        magneticElements.forEach(elem => {
+            elem.addEventListener('mousemove', (e) => {
+                const rect = elem.getBoundingClientRect();
+                const x = e.clientX - rect.left - rect.width / 2;
+                const y = e.clientY - rect.top - rect.height / 2;
+                
+                elem.style.transform = `translate(${x * 0.2}px, ${y * 0.2}px)`;
+                cursor.classList.add('hover');
+            });
+            
+            elem.addEventListener('mouseleave', () => {
+                elem.style.transform = 'translate(0, 0)';
+                cursor.classList.remove('hover');
+            });
+        });
+        
+        // Navbar scroll effect
+        const navbar = document.getElementById('navbar');
+        
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('py-2');
+                navbar.classList.remove('py-4');
+            } else {
+                navbar.classList.add('py-4');
+                navbar.classList.remove('py-2');
+            }
+        });
+        
+        // Mobile menu
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+        
+        // Close mobile menu on link click
+        mobileMenu.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+            });
+        });
+        
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
