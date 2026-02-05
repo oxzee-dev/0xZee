@@ -900,6 +900,77 @@
             font-family: 'JetBrains Mono', monospace;
         }
 
+          /* ============================================
+           ECOSYSTEM SECTION
+           ============================================ */
+        .ecosystem {
+            background: var(--bg-primary);
+            min-height: 80vh;
+        }
+
+        .ecosystem-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-top: 4rem;
+        }
+
+        .ecosystem-card {
+            aspect-ratio: 1;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            text-decoration: none;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.5s var(--ease-expo);
+        }
+
+        .ecosystem-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(0, 245, 212, 0.15), transparent 50%);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .ecosystem-card:hover::before {
+            opacity: 1;
+        }
+
+        .ecosystem-card:hover {
+            transform: translateY(-5px) scale(1.02);
+            border-color: var(--accent-cyan);
+        }
+
+        .ecosystem-icon {
+            font-size: 3rem;
+            transition: transform 0.3s;
+        }
+
+        .ecosystem-card:hover .ecosystem-icon {
+            transform: scale(1.2) rotate(5deg);
+        }
+
+        .ecosystem-label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        .ecosystem-handle {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+
         /* ============================================
            FOOTER
            ============================================ */
@@ -1453,8 +1524,62 @@
         </div>
     </section>
 
+
+    <!-- ECOSYSTEM SECTION -->
+    <section class="ecosystem" id="connect">
+        <div class="container">
+            <div class="section-header reveal">
+                <div class="section-label">Connect</div>
+                <h2 class="section-title">Ecosystem</h2>
+                <p style="color: var(--text-secondary); max-width: 600px; margin-top: 1rem;">
+                    Find me across the web. Building in public, sharing knowledge, 
+                    and contributing to the AI/ML community.
+                </p>
+            </div>
+            
+            <div class="ecosystem-grid">
+                <a href="https://github.com/0xZee" target="_blank" class="ecosystem-card reveal" style="--mouse-x: 50%; --mouse-y: 50%;">
+                    <div class="ecosystem-icon">🐙</div>
+                    <div class="ecosystem-label">GitHub</div>
+                    <div class="ecosystem-handle">@0xZee</div>
+                </a>
+                
+                <a href="https://twitter.com/0xZee" target="_blank" class="ecosystem-card reveal" style="--mouse-x: 50%; --mouse-y: 50%;">
+                    <div class="ecosystem-icon">🐦</div>
+                    <div class="ecosystem-label">Twitter / X</div>
+                    <div class="ecosystem-handle">@0xZee</div>
+                </a>
+                
+                <!-- <a href="#" class="ecosystem-card reveal" style="--mouse-x: 50%; --mouse-y: 50%;">
+                    <div class="ecosystem-icon">💬</div>
+                    <div class="ecosystem-label">Discord</div>
+                    <div class="ecosystem-handle">0xZee#1337</div>
+                </a>
+                
+                <a href="#" class="ecosystem-card reveal" style="--mouse-x: 50%; --mouse-y: 50%;">
+                    <div class="ecosystem-icon">🌿</div>
+                    <div class="ecosystem-label">Warpcast</div>
+                    <div class="ecosystem-handle">@0xZee</div>
+                </a> -->
+                
+                <a href="#" class="ecosystem-card reveal" style="--mouse-x: 50%; --mouse-y: 50%;">
+                    <div class="ecosystem-icon">📧</div>
+                    <div class="ecosystem-label">Email</div>
+                    <div class="ecosystem-handle">0xZee@proton.me</div>
+                </a>
+                
+                <!-- <a href="#" class="ecosystem-card reveal" style="--mouse-x: 50%; --mouse-y: 50%;">
+                    <div class="ecosystem-icon">📝</div>
+                    <div class="ecosystem-label">Blog</div>
+                    <div class="ecosystem-handle">0xZee.dev</div>
+                </a> -->
+            </div>
+        </div>
+    </section>
+
+    
     <!-- CONNECT SECTION - 3 CARDS ONLY -->
-    <section class="connect-section" id="connect">
+    <!-- <section class="connect-section" id="connect">
         <div class="container">
             <div class="section-header reveal">
                 <div class="section-label">Connect</div>
@@ -1485,7 +1610,10 @@
                 </a>
             </div>
         </div>
-    </section>
+    </section> -->
+
+
+    
 
     <!-- FOOTER -->
     <footer>
